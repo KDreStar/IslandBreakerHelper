@@ -6,6 +6,8 @@
     import { convertGridToBricks, getBall, simulateReflect, type Vector2D } from './utils/physics';
     import { get } from 'svelte/store';
 
+	import ballImgUrl from '/assets/ball.png';
+
     let videoElement: HTMLVideoElement;
     let canvasElement: HTMLCanvasElement;
     
@@ -22,10 +24,14 @@
 
     onMount(() => {
         const ballImg = new Image();
-        ballImg.src = '/assets/ball.png';
+        ballImg.src = ballImgUrl;
         ballImg.onload = () => {
             initBallTemplate(ballImg);
             console.log("Image loaded");
+        };
+
+		ballImg.onerror = (err) => {
+            console.error("Failed to load ball image:", err);
         };
     });
 
