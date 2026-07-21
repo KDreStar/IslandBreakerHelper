@@ -6,12 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Island Breaker Helper</title>
 
+    <!-- 1. OpenCV 초기화 설정 -->
+    <script>
+      var Module = {
+        onRuntimeInitialized: function() {
+          console.log("OpenCV.js Loaded Successfully!");
+          window.isOpenCvReady = true;
+          
+          // 💡 OpenCV 초기화가 완전히 끝나면 main.ts를 모듈로 불러와 앱을 마운트합니다.
+          import('/src/main.ts');
+        }
+      };
+    </script>
 
-    <!-- 💡 %BASE_URL%을 붙여 base 경로가 '/IslandBreakerHelper/' 일 때도 정확히 추적 -->
+    <!-- 2. opencv.js 로드 (defer/async 없이 불러옴) -->
     <script src="%BASE_URL%js/opencv.js"></script>
   </head>
   <body>
     <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <!-- ⚠️ 기존 <script type="module" src="/src/main.ts"></script> 부분은 삭제합니다! -->
   </body>
 </html>
