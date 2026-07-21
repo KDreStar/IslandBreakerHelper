@@ -178,14 +178,14 @@
             captureAndDrawLaunch(videoElement);
 
             if (isNewTurn) {
-                scanAllGridCellsDebug(ctx);
+                scanAllGridCells();
 				isNewTurn = false;
 			}
 
             let bricks = convertGridToBricks(get(gridState));
 
-            findBallDebugInfo(ctx, bricks);
-            findArrowDebugInfo(ctx);
+            //findBallDebugInfo(ctx, bricks);
+            //findArrowDebugInfo(ctx);
 
             let ballPos = findBall(bricks);
             let arrowPos = findArrow();
