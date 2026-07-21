@@ -22,18 +22,35 @@
     let currentScale = 1.0;
     let originalCaptureSize = { width: 0, height: 0 };
 
-    onMount(() => {
-        const ballImg = new Image();
-        ballImg.src = ballImgUrl;
-        ballImg.onload = () => {
-            initBallTemplate(ballImg);
-            console.log("Image loaded");
-        };
+	// 1. OpenCV 준비 상태를 일정 간격(50ms)으로 체크하는 함수
+	function ensureOpenCVReady(): Promise<void> {
+		return new Promise((resolve) => {
+		// 이미 준비된 경우 즉시 통과
+		if (typeof cv !== 'undefined' && cv && cv.Mat) {
+			resolve();
+			return;
+		}
 
-		ballImg.onerror = (err) => {
-            console.error("Failed to load ball image:", err);
-        };
-    });
+		console.log("OpenCV 로딩 대기 중...");
+		const interval = setInterval(() => {
+			if (typeof cv !== 'undefined' && cv && cv.Mat) {
+			clearInterval(interval);
+			console.log("OpenCV 준비 완료!");
+			resolve();
+			}
+		}, 50); // 50ms 간격으로 확인
+		});
+	}
+
+	// 2. 이미지를 불러오는 Promise 함수
+	function loadBallImage(src: string): Promise<HTMLImageElement> {
+		return new Promise((resolve, reject) => {
+		const img = new Image();
+		img.src = src;
+		img.onload = () => resolve(img);
+		img.onerror = (err) => reject(err);
+		});
+	}
 
     async function openCanvasInDocumentPip() {
         if (!('documentPictureInPicture' in window)) {
@@ -79,6 +96,14 @@
                 } as any,
                 audio: false
             });
+
+			// ② OpenCV 로드 및 공 이미지 준비를 대기
+			await ensureOpenCVReady();
+			const ballImg = await loadBallImage(ballImgUrl);
+
+			// ③ 준비 완료 후 템플릿 초기화!
+			initBallTemplate(ballImg);
+			console.log("공 템플릿 초기화 완료!");
 
             if (videoElement) {
                 videoElement.srcObject = stream;

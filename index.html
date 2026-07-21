@@ -6,24 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Island Breaker Helper</title>
 
-    <!-- 1. OpenCV 초기화 설정 -->
+    <!-- 1. OpenCV 초기화 이벤트 정의 -->
     <script>
       var Module = {
         onRuntimeInitialized: function() {
-          console.log("OpenCV.js Loaded Successfully!");
+          console.log("OpenCV.js Engine Ready!");
           window.isOpenCvReady = true;
-          
-          // 💡 OpenCV 초기화가 완전히 끝나면 main.ts를 모듈로 불러와 앱을 마운트합니다.
-          import('/src/main.ts');
+          window.dispatchEvent(new Event('opencv-ready'));
         }
       };
     </script>
 
-    <!-- 2. opencv.js 로드 (defer/async 없이 불러옴) -->
-    <script src="%BASE_URL%js/opencv.js"></script>
+    <!-- 2. opencv.js 불러오기 -->
+    <script src="/js/opencv.js"></script>
   </head>
   <body>
     <div id="app"></div>
-    <!-- ⚠️ 기존 <script type="module" src="/src/main.ts"></script> 부분은 삭제합니다! -->
+    <!-- 💡 원래대로 Vite entry point를 연결합니다 -->
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
