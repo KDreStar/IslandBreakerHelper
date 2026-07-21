@@ -42,7 +42,7 @@ export function captureAndDrawStage(video: HTMLVideoElement) {
 }
 
 export function findArrow(
-  fixedScanY = 798 - 704, // 캐릭터 머리와 xn 안 겹치는 안전한 가로선 Y 좌표
+  fixedScanY = 799 - 704, // 캐릭터 머리와 xn 안 겹치는 안전한 가로선 Y 좌표
   thicknessThreshold = 50 // 화살표가 누웠다고 판단할 기준 픽셀 길이
 ): Vector2D | null {
 

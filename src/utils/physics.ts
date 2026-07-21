@@ -39,7 +39,7 @@ export function getBall(startPoint: Vector2D | null, targetPoint: Vector2D | nul
   }
 
   return {
-    pos : {x: startPoint.x, y: startPoint.y},
+    pos : {x: targetPoint.x, y: targetPoint.y},
     velocity: {x: dx / distance, y: dy / distance}
   };
 }
