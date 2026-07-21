@@ -91,7 +91,7 @@
         } catch (error) {
             console.error("화면 공유 실패:", error);
         }
-    }
+    } 
 
     function stopScreenShare() {
         isCapturing = false;
