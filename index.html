@@ -6,19 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Island Breaker Helper</title>
 
-    <!-- 💡 OpenCV.js가 로드 완료되면 window 전역에 준비 상태 알림 이벤트 발행 -->
-    <script>
-      var Module = {
-        onRuntimeInitialized: function() {
-          console.log("OpenCV.js is fully initialized!");
-          window.isOpenCvReady = true;
-          window.dispatchEvent(new Event('opencv-ready'));
-        }
-      };
-    </script>
 
     <!-- 💡 %BASE_URL%을 붙여 base 경로가 '/IslandBreakerHelper/' 일 때도 정확히 추적 -->
-    <script async defer src="%BASE_URL%js/opencv.js"></script>
+    <script src="%BASE_URL%js/opencv.js"></script>
   </head>
   <body>
     <div id="app"></div>
