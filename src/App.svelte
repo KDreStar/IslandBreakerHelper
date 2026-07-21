@@ -14,7 +14,7 @@
     let stream: MediaStream | null = null;
     let animationFrameId: number;
     let isCapturing = false;
-    let isNewTurn = true;
+    
 
     // 💡 옵션: 첫 번째 부딪히는 블록 무시 경로 표시 여부 (기본값: false)
     let showGhostTrajectory = false;
@@ -116,6 +116,9 @@
     function renderLoop() {
         if (!isCapturing || !videoElement || !canvasElement) return;
 
+		let isNewTurn = true;
+		let lastArrow: Vector2D | null = null;
+
         const ctx = canvasElement.getContext('2d');
         if (ctx) {
             const srcWidth = videoElement.videoWidth;
@@ -149,8 +152,10 @@
             captureAndDrawStage(videoElement);
             captureAndDrawLaunch(videoElement);
 
-            if (isNewTurn)
+            if (isNewTurn) {
                 scanAllGridCellsDebug(ctx);
+				isNewTurn = false;
+			}
 
             let bricks = convertGridToBricks(get(gridState));
 
@@ -159,6 +164,9 @@
 
             let ballPos = findBall(bricks);
             let arrowPos = findArrow();
+
+			if (arrowPos !== null && lastArrow == null)
+				isNewTurn = true;
 
             let ball = getBall(arrowPos, ballPos);
 

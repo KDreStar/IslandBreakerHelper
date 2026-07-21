@@ -495,7 +495,9 @@ export function isBlockPresentByNumberDebug(
   ctx: CanvasRenderingContext2D, 
   cell: CellRange,
   row: number,
-  col: number
+  col: number,
+  scaleX = 1,
+  scaleY = 1
 ): boolean {
   // 1. 실제 숫자가 들어올 영역(가운데 좁은 세로) 계산
   const scanWidth = Math.round(cell.width * 0.4);   // 가로의 중앙 40% 영역만
@@ -503,7 +505,7 @@ export function isBlockPresentByNumberDebug(
   const scanX = cell.x + Math.round((cell.width - scanWidth) / 2);
   const scanY = cell.y + Math.round(cell.height * 0.05);
 
-  const imgData = ctx.getImageData(scanX, scanY, scanWidth, scanHeight);
+  const imgData = stageCtx.getImageData(scanX, scanY, scanWidth, scanHeight);
   const data = imgData.data;
 
   let whitePixelCount = 0;
@@ -527,6 +529,9 @@ export function isBlockPresentByNumberDebug(
   const whiteRatio = whitePixelCount / totalPixels;
   const hasBlock = whiteRatio > 0.02; // 2% 기준
 
+  const newX = scanX * scaleX;
+  const newY = scanY * scaleY;
+
   // ==========================================
   // 🎨 실시간 캔버스 디버그 드로잉 레이어 시작
   // ==========================================
@@ -535,7 +540,7 @@ export function isBlockPresentByNumberDebug(
   // ① 검사 영역 빨간 네모 가이드선 그리기
   ctx.strokeStyle = hasBlock ? '#ef4444' : '#3b82f6'; // 블록이 있으면 선명한 빨간색, 없으면 파란색
   ctx.lineWidth = 1.5;
-  ctx.strokeRect(scanX, scanY, scanWidth, scanHeight);
+  ctx.strokeRect(newX, newY, scanWidth * scaleX, scanHeight * scaleY);
 
   // ② 흰색 픽셀 점유율(%) 텍스트 표시
   ctx.fillStyle = hasBlock ? '#fca5a5' : '#93c5fd';
@@ -543,12 +548,12 @@ export function isBlockPresentByNumberDebug(
   ctx.textBaseline = 'top';
   // 감지된 비율을 백분율(%)로 표기 (예: "R: 5.2%")
   const percentText = `${(whiteRatio * 100).toFixed(1)}%`;
-  ctx.fillText((percentText + ", " + whitePixelCount), scanX + 2, scanY + 2);
+  ctx.fillText((percentText + ", " + whitePixelCount), newX + 2, newY + 2);
 
   // ③ 격자 좌표 디버깅 텍스트 (예: "[0,1]")
   ctx.fillStyle = '#64748b';
   ctx.font = '8px sans-serif';
-  ctx.fillText(`[${row},${col}]`, cell.x + 2, cell.y + 2);
+  ctx.fillText(`[${row},${col}]`, cell.x * scaleX + 2, cell.y * scaleY + 2);
 
   ctx.restore(); // 캔버스 상태 복구
   // ==========================================
