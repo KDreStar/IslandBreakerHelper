@@ -219,6 +219,12 @@
         <h1 class="title">ISLAND BREAKER <span class="badge">HELPER</span></h1>
         <p class="description">미니게임 아일랜드 브레이커 반사 궤적 실시간 가이드</p>
     </header>
+
+	<div class="notice-box">
+		<span class="warning-text">
+			⚠️ 모서리 반사는 연산 오차가 발생할 수 있으니 참고용으로만 확인해 주세요.
+		</span>
+	</div>
     
     <!-- 컨트롤 영역 -->
     <div class="controls-card">
@@ -506,4 +512,15 @@
     .placeholder li {
         margin-bottom: 0.4rem;
     }
+	.notice-box {
+		margin-top: 8px;
+		text-align: center;
+	}
+
+	.warning-text {
+		color: #ff4757; /* 밝은 빨간색 (다크 모드에서도 잘 보임) */
+		font-size: 0.85rem;
+		font-weight: 600;
+		letter-spacing: -0.3px;
+	}
 </style>
