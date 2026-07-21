@@ -198,14 +198,14 @@
             // 1. 기본 반사선 연산
             let balls = simulateReflect(ball, bricks);
 
-            // 2. 기본 반사선 그린 (빨간색/주황색 계열)
-            drawTrajectory(ctx, balls, 'rgba(255, 71, 87, 0.95)', 10, scaleX, scaleY);
-
             // 💡 3. 토글 옵션이 켜져있을 때만 첫 블록 무시 2번째 반사선 그리기 (연두색/라임 계열)
             if (showGhostTrajectory) {
                 let balls2 = simulateReflect(ball, bricks, 1);
                 drawTrajectory(ctx, balls2, 'rgba(46, 213, 115, 0.85)', 10, scaleX, scaleY);
             }
+
+			// 2. 기본 반사선 그린 (빨간색/주황색 계열)
+            drawTrajectory(ctx, balls, 'rgba(255, 71, 87, 0.95)', 10, scaleX, scaleY);
         }
 
         animationFrameId = requestAnimationFrame(renderLoop);
