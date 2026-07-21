@@ -24,7 +24,7 @@ export const CELL_HEIGHT = 79;
 export const CELL_GAP = 2;
 export const CELL_RADIUS = 0;
 export const STAGE_MARGIN = 5;
-export const BALL_RADIUS = 17;
+export const BALL_RADIUS = 16;
 
 export const GRID_COLS = 6;
 export const GRID_ROWS = 8;
